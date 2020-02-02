@@ -1,0 +1,22 @@
+<svg id="AC_Source" data-name="AC Source" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 126">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke: #000;
+        stroke-width: 6px;
+      }
+
+      .cls-1 {
+        stroke-linecap: square;
+      }
+    </style>
+  </defs>
+  <title>AC_Source</title>
+  <g id="layer1">
+    <path id="path1319" class="cls-1" d="M119,120c-32.86,0-59.5-26.86-59.5-60S86.14,0,119,0s59.5,26.86,59.5,60-26.64,60-59.5,60Z" transform="translate(0 3)"/>
+    <path id="path2194" class="cls-2" d="M178.5,60H240" transform="translate(0 3)"/>
+    <path id="path2196" class="cls-2" d="M59.5,60H0" transform="translate(0 3)"/>
+    <path id="path4056" class="cls-2" d="M119,24s19.83,6,19.83,18S99.17,66,99.17,78,119,96,119,96" transform="translate(0 3)"/>
+  </g>
+</svg>

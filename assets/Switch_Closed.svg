@@ -1,0 +1,37 @@
+<svg id="Switch_Closed" data-name="Switch Closed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        fill-rule: evenodd;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke: #000;
+        stroke-width: 6px;
+      }
+
+      .cls-2, .cls-3 {
+        fill: none;
+      }
+
+      .cls-2 {
+        stroke-linejoin: round;
+      }
+
+      .cls-3 {
+        stroke-linejoin: bevel;
+      }
+    </style>
+  </defs>
+  <title>Switch_Closed</title>
+  <g id="layer1">
+    <g id="g3070">
+      <path id="path1307" class="cls-1" d="M101.7,60A14.57,14.57,0,1,1,87.14,45,14.79,14.79,0,0,1,101.7,60Z" transform="translate(0 -42)"/>
+      <path id="path2184" class="cls-2" d="M169.14,60H240" transform="translate(0 -42)"/>
+      <path id="path3059" class="cls-2" d="M0,60H70.86" transform="translate(0 -42)"/>
+      <path id="path2182" class="cls-1" d="M168.86,60A14.57,14.57,0,1,1,154.3,45,14.79,14.79,0,0,1,168.86,60Z" transform="translate(0 -42)"/>
+    </g>
+  </g>
+  <line class="cls-3" x1="102" y1="17.91" x2="140" y2="17.91"/>
+</svg>

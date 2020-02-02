@@ -1,0 +1,14 @@
+<svg id="Resistor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 42.68">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-linejoin: bevel;
+        stroke-width: 6px;
+      }
+    </style>
+  </defs>
+  <title>Resistor</title>
+  <path class="cls-1" d="M0,60H60L70,40,90,80l20-40,20,40,20-40,20,40,10-20h60" transform="translate(0 -38.66)"/>
+</svg>

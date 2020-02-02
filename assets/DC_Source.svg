@@ -1,0 +1,24 @@
+<svg id="DC_Source" data-name="DC Source" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 126">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke: #000;
+        stroke-width: 6px;
+      }
+
+      .cls-2 {
+        stroke-linecap: square;
+      }
+    </style>
+  </defs>
+  <title>DC_Source</title>
+  <g id="layer1">
+    <path id="path2194" class="cls-1" d="M176,60h64" transform="translate(0 3)"/>
+    <path id="path2196" class="cls-1" d="M64,60H0" transform="translate(0 3)"/>
+    <path id="path2243" class="cls-1" d="M161.05,60H138.66" transform="translate(0 3)"/>
+    <path id="path2245" class="cls-1" d="M149.86,72V48" transform="translate(0 3)"/>
+    <path id="path2247" class="cls-1" d="M88.28,72V48" transform="translate(0 3)"/>
+    <path id="path2249" class="cls-2" d="M120,120c-30.92,0-56-26.86-56-60S89.08,0,120,0s56,26.86,56,60S150.92,120,120,120Z" transform="translate(0 3)"/>
+  </g>
+</svg>

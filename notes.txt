@@ -1,0 +1,33 @@
+Inputs:
+    Circuit type
+    R, L, C values
+To display:
+    Wave Equation:
+        Rectangular
+        Polar
+        Exponential
+        Sin Equation
+        Cos Equation
+    Voltage:
+        Sin Wave
+        Sin Circle
+        Average Voltage
+        RMS/Effective Voltage
+    Current:
+        Sin Wave
+        Sin Circle
+        Average Current
+        RMS/Effective Current
+    Power:
+        Sin Wave (Instantaneous Power)
+        Sin Circle
+    Circuit:
+        Filter Graph
+        Maximum Power Transfer
+        Power Factor
+        Average Power
+        Total impedance
+        Real Power
+        Active Power
+        Reactive Power
+        Appearent Power

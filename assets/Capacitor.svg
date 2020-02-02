@@ -1,0 +1,16 @@
+<svg id="Capacitor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-width: 6px;
+      }
+    </style>
+  </defs>
+  <title>Capacitor</title>
+  <path id="path17480" class="cls-1" d="M140,115V5" transform="translate(0 -5)"/>
+  <path id="path17482" class="cls-1" d="M100,59.5H0" transform="translate(0 -5)"/>
+  <path id="path17484" class="cls-1" d="M140,59.5H240" transform="translate(0 -5)"/>
+  <path id="path4638" class="cls-1" d="M100,115V5" transform="translate(0 -5)"/>
+</svg>

@@ -1,0 +1,19 @@
+{
+  "name": "acvisualizer",
+  "version": "1.0.0",
+  "description": "Trying to visualize the differnt aspects of AC electricity",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kenny Kim",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^13.5.0",
+    "complex.js": "^2.0.11",
+    "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10"
+  }
+}

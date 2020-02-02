@@ -1,0 +1,30 @@
+<svg id="Switch_Open" data-name="Switch Open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 65.49">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        fill-rule: evenodd;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #000;
+        stroke-width: 6px;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  <title>Switch_Open</title>
+  <g id="layer1">
+    <g id="g3070">
+      <path id="path1307" class="cls-1" d="M101.7,60.09A14.56,14.56,0,1,1,87.14,45.18,14.74,14.74,0,0,1,101.7,60.09Z" transform="translate(0 -12.51)"/>
+      <path id="path2184" class="cls-2" d="M169.14,60.09H240" transform="translate(0 -12.51)"/>
+      <path id="path3059" class="cls-2" d="M0,60.09H70.86" transform="translate(0 -12.51)"/>
+      <path id="path3061" class="cls-2" d="M87.07,15l71.16,47.69" transform="translate(0 -12.51)"/>
+      <path id="path2182" class="cls-1" d="M168.86,60.09A14.56,14.56,0,1,1,154.3,45.18,14.74,14.74,0,0,1,168.86,60.09Z" transform="translate(0 -12.51)"/>
+    </g>
+  </g>
+</svg>

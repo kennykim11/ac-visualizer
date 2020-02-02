@@ -1,0 +1,13 @@
+<svg id="Inductor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 33">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-width: 6px;
+      }
+    </style>
+  </defs>
+  <title>Inductor</title>
+  <path class="cls-1" d="M0,60H48c0-36,48-36,48,0,0-36,48-36,48,0,0-36,48-36,48,0h48" transform="translate(0 -30)"/>
+</svg>

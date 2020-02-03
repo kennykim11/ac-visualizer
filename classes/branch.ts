@@ -1,5 +1,6 @@
+import { ComplexC } from './../math/complexC';
 
-class Branch{
-    voltage: number //Measured vs other end of power source
-    current: number //Always in direction of arrow
+export class Branch{
+    voltage: ComplexC //Measured vs other end of power source
+    current: ComplexC //Always in direction of arrow
 }

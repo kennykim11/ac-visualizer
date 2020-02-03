@@ -31,3 +31,9 @@ To display:
         Active Power
         Reactive Power
         Appearent Power
+Types of graphs:
+    Circle+History
+    180+History
+Global settings
+    Display in polar or time-freq
+    Global time scale factor

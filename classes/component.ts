@@ -1,55 +1,25 @@
-import { CircuitNode } from './circuitNode';
-const Complex = require('complex.js')
+import { ComplexC } from '../math/complexC';
+
+export enum ComponentType{
+    VoltageSource = 'VS',
+    Capacitor = 'C',
+    Inductor = 'L',
+    Resistor = 'R'
+}
 
 export class Component{
     id: string
-    effect = Complex() //Effect can be a source or an impedence
-    type: string
-    values = {}
-    inputNode: CircuitNode[] //Inputs are always the componnents connected to the TOP or LEFT
-    outputNode: CircuitNode[] //Outputs are always the componnents connected to the BOTTOM or RIGHT
+    X: ComplexC //X for impedence
+    pwr: ComplexC //Voltage source
+    type: ComponentType
+    values: {[key: string]: string}
     htmlElement = null
-    svgPath: string
-    direction: string
-    
-    public constructor(id: string, values, width: number, direction: string){
-        this.id = id
-        this.values = values //Values should be a dictionary where the key is the name
-        this.htmlElement = document.createElement('div');
-        this.htmlElement.id = id
-        this.htmlElement.style.width = width
-        this.direction = direction //Can only be RIGHT, TOP, LEFT, BOTTOM
-        
-        //Creating SVG of component
-        var svgObject = document.createElement('object')
-        svgObject.className = 'componentSvg'
-        svgObject.style.height = (+svgObject.style.height / +svgObject.style.width * width).toString()
-        svgObject.style.width = width.toString()
-        svgObject.type = 'image/svg+xml'
-        svgObject.data = this.svgPath
-        this.htmlElement.appendChild(svgObject)
 
-        //Creating fields below SVG
-        for (const [key, value] of Object.entries(values)){
-            //Creating field label on left
-            var label = document.createElement('p')
-            label.innerHTML = key
-            label.className = 'componentLabel'
-            label.style.width = (width/2).toString()
-            //Creating field input on right
-            var field = document.createElement('p')
-            field.innerHTML = value.toString()
-            field.className = 'componentField'
-            field.style.width = (width/2).toString()
-            field.id = id + '_' + key
-            field.onchange(this.changedValue.bind(field))
-            //Putting it both in a row
-            var row = document.createElement('span')
-            row.appendChild(label)
-            row.appendChild(field)
-            this.htmlElement.appendChild(row)
-        }
-        //Putting everything as one div
+    public constructor(id: string, startingX: ComplexC, startingPwr, values: {[key: string]: string}){
+        this.pwr = startingPwr
+        this.X = startingX
+        this.id = id
+        this.values = values
     }
 
     public changedValue(fieldElement){

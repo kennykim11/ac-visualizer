@@ -9,7 +9,7 @@ export enum ComponentType{
 
 export class Component{
     id: string
-    X: ComplexC //X for impedence
+    Z: ComplexC //Z for impedence
     pwr: ComplexC //Voltage source
     type: ComponentType
     values: {[key: string]: string}
@@ -17,7 +17,7 @@ export class Component{
 
     public constructor(id: string, startingX: ComplexC, startingPwr, values: {[key: string]: string}){
         this.pwr = startingPwr
-        this.X = startingX
+        this.Z = startingX
         this.id = id
         this.values = values
     }

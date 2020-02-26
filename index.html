@@ -1,4 +1,21 @@
-<script src="./graphing.js"></script>
-<script src="./index.js"></script>
-<span id="circuitBoard"></span>
-<canvas id="myCanvas" width="360" height="80" style="border:1px solid #d3d3d3; margin: 50px;">
+<head>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<script src="./index.ts"></script>
+<div>
+    <span id="left">
+        <img id="circuitImage" src="./assets/circuit2.gif"/>
+    </span>
+    <span id="right">
+        <div id="settingsBar">
+            <div id="pauseButton">PAUSE</div>
+        </div>
+    </span>
+</div>
+<div id="canvases">
+    <canvas id="SourceV_SourceI" width="288" height="108" class="graph"></canvas>
+    <canvas id="SourceI_ResI" width="288" height="108" class="graph"></canvas>
+    <canvas id="SourceI_IndI" width="288" height="108" class="graph"></canvas>
+    <canvas id="SourceI_CapI" width="288" height="108" class="graph"></canvas>
+</div>
+

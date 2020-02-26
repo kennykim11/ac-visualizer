@@ -1,0 +1,50 @@
+
+#left {
+    float: left;
+    width: 79%;
+    height: 500px;
+}
+
+#right {
+    float: left;
+    width: 20%;
+    height: 500px;
+    position: relative;
+}
+
+#settingsBar {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.fieldBox {
+    border-style: solid;
+    border-width: 0.5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 10px;
+}
+
+#pauseButton {
+    background-color: red;
+    text-align: center;
+    border-style: solid;
+    border-width: 0.5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 10px;
+}
+
+#circuitImage {
+    width: 100%;
+}
+
+.graph{
+    border:1px solid #d3d3d3;
+    margin: 0px;
+}

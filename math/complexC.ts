@@ -1,4 +1,3 @@
-
 export class ComplexC{
     real: number
     imaginary: number
@@ -16,7 +15,7 @@ export class ComplexC{
     }
 
     getPolar(){
-        return {'mag': Math.sqrt((this.real * this.real) + (this.imaginary * this.imaginary)), 'angle': Math.atan(this.imaginary / this.real)}
+        return {mag: Math.sqrt((this.real * this.real) + (this.imaginary * this.imaginary)), angle: Math.atan(this.imaginary / this.real)}
     }
 
     getPolarString(){
@@ -43,8 +42,13 @@ export class ComplexC{
     div(other: ComplexC): ComplexC{
         var thisPolar = this.getPolar()
         var otherPolar = other.getPolar()
-        var totalMag = thisPolar.mag + otherPolar.mag
-        var totalAngle = thisPolar.angle + otherPolar.angle
-        return new ComplexC(totalMag*Math.cos(totalAngle), totalAngle*Math.sin(totalAngle))
+        var totalMag = thisPolar.mag / otherPolar.mag
+        var totalAngle = thisPolar.angle - otherPolar.angle
+        return new ComplexC(totalMag*Math.cos(totalAngle), totalMag*Math.sin(totalAngle))
+    }
+
+    reciprocal(): ComplexC{
+        var denominator = (this.real * this.real) + (this.imaginary * this.imaginary) //Results in a non-complex number
+        return new ComplexC(this.real/denominator, -1*this.imaginary/denominator)
     }
 }

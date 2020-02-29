@@ -9,5 +9,12 @@ window.onload = function(){
 
     var time = 0
     var timeInterval = 10
-    this.timerHandler = setInterval(function(){time += timeInterval; circ.redraw(time);}, timeInterval)
+    var paused = false
+    this.timerHandler = setInterval(function(){
+        if (!paused) {
+            time += timeInterval;
+            circ.redraw(time);
+        }
+    },timeInterval)
+    document.getElementById('pauseButton').onclick = () => {paused = !paused}
 }

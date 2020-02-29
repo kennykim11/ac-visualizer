@@ -40,7 +40,7 @@ export class Signal{
         this.phi = newEquation.getPolar()['angle']
     }
 
-    draw(timeInstant){
+    draw(timeInstant: number): number{ //Returns the calculated value
         if (this.memory.length >= this.elementMax) this.memory.pop() //Take out the last element
         var center = this.graph.circleWinX/2 //Get the vertical center (used for a lot of things)
         var angleInRadian = -((timeInstant/1000)*2*Math.PI*this.frequency + this.phi) //Has to be negative because in HTML canvas positive y goes down, also /1000 because timeInstant is in ms
@@ -78,6 +78,6 @@ export class Signal{
         }
         cxt.stroke();
 
-        //if (currentY == 180) {console.log((new Date).getTime())}
+        return calculatedY
     }
 }

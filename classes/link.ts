@@ -6,12 +6,10 @@ export class Link{
 
     value: number
     units: string
-    context: Circuit2
 
-    public constructor(id: string, label: string, units: string, defaultValue: number, minimum: number, maximum: number, recalculateCallback: (context) => void, context: Circuit2){
+    public constructor(id: string, label: string, units: string, defaultValue: number, minimum: number, maximum: number, recalculateCallback: () => void){
 
         this.units = units
-        this.context = context
         this.value = defaultValue
 
         const sliderElement = <HTMLInputElement> document.createElement('input')
@@ -41,13 +39,13 @@ export class Link{
         sliderElement.oninput = () => { //Required for using "this"
             this.value = parseInt(sliderElement.value)
             valueElement.value = sliderElement.value
-            recalculateCallback(this.context)
+            recalculateCallback()
         }
 
         valueElement.onchange = () => {
             this.value = parseInt(sliderElement.value)
             sliderElement.value = valueElement.value
-            recalculateCallback(this.context)
+            recalculateCallback()
         }
 
         const lineBreak2 = <HTMLElement> document.createElement('br')

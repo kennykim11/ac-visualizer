@@ -3,6 +3,7 @@ import { Signal } from './signal';
 
 export class Graph{
     canvas: HTMLCanvasElement
+    span: HTMLSpanElement
     context: CanvasRenderingContext2D
     axisLineInterval: number
     axisLineLength: number
@@ -12,10 +13,11 @@ export class Graph{
     circleWinX: number
     waveWinX: number
     signals: {(id: string): Signal}
-    paused: boolean = false
 
-    constructor(id, axisLineInterval, axisLineLength, canvasSize, signals){
-        this.canvas = <HTMLCanvasElement>document.getElementById(id)
+    constructor(id: string, axisLineInterval: number, axisLineLength: number, canvasSize, signals?: {(id: string): Signal}){
+        var parent = <HTMLElement>document.getElementById(id)
+        this.span = document.createElement('span')
+        this.canvas = document.createElement('canvas')
         this.context = this.canvas.getContext('2d')
         this.axisLineInterval = axisLineInterval
         this.axisLineLength = axisLineLength
@@ -28,7 +30,16 @@ export class Graph{
         this.canvas.width = this.canvasX
         this.canvas.height = this.canvasY
 
-        this.signals = <{(id: string): Signal}>{}
+        this.span.appendChild(this.canvas)
+        this.signals = signals || <{(id: string): Signal}>{}
+        for (var id in signals){
+            var textElement = document.createElement('p')
+            textElement.id = id+'Text'
+            textElement.style.color = signals[id].lineColor
+            this.span.appendChild(textElement)
+        }
+
+        parent.appendChild(this.span)
     }
 
     drawAxis(){
@@ -59,16 +70,25 @@ export class Graph{
         cxt.stroke();
     }
 
-    redraw(timeInstant){
+    redraw(timeInstant): {(id: string): number}{
         /* Redraw the entire graph with all the signals */
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawAxis()
         this.drawCircle()
-        if (!this.paused) Object.keys(this.signals).forEach(id => this.signals[id].draw(timeInstant));
+        var currentValues: {(id: string): number} = <{(id: string): number}>{}
+        Object.keys(this.signals).forEach(id => {
+            currentValues[id] = this.signals[id].draw(timeInstant)
+        })
+        return currentValues
     }
 
-    addSignal(id, ...args){
+    addSignal(id: string, ...args: [ComplexC, number, string]){
         this.signals[id] = new Signal(this, ...args)
+
+        var textElement = document.createElement('p')
+        textElement.id = id+'Text'
+        textElement.style.color = args[2]
+        this.span.appendChild(textElement)
     }
 
     getSignals(){
@@ -77,9 +97,5 @@ export class Graph{
 
     setSignal(id: string, equation: ComplexC){
         this.signals[id].updateEquation(equation)
-    }
-
-    pauseToggle(){
-        this.paused = !this.paused
     }
 }

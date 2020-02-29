@@ -11,7 +11,7 @@ export class ComplexC{
     }
 
     getRectString(){
-        return `${this.real.toString()}+j${this.imaginary.toString()}`
+        return `${this.real.toFixed(3)}+j${this.imaginary.toFixed(3)}`
     }
 
     getPolar(){
@@ -20,7 +20,7 @@ export class ComplexC{
 
     getPolarString(){
         var polar = this.getPolar()
-        return `${polar.mag}∠${polar.angle}°`
+        return `${polar.mag.toFixed(3)}∠${(polar.angle * 180 / Math.PI).toFixed(3)}°`
     }
 
     add(other: ComplexC): ComplexC{
@@ -40,11 +40,8 @@ export class ComplexC{
     }
 
     div(other: ComplexC): ComplexC{
-        var thisPolar = this.getPolar()
-        var otherPolar = other.getPolar()
-        var totalMag = thisPolar.mag / otherPolar.mag
-        var totalAngle = thisPolar.angle - otherPolar.angle
-        return new ComplexC(totalMag*Math.cos(totalAngle), totalMag*Math.sin(totalAngle))
+        var denominator = other.real * other.real + other.imaginary * other.imaginary
+        return new ComplexC(((this.real * other.real) + (this.imaginary + other.imaginary))/denominator, ((this.real * other.imaginary) + (this.imaginary + other.real))/denominator)
     }
 
     reciprocal(): ComplexC{

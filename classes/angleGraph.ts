@@ -1,8 +1,7 @@
-import { Unit } from './unit';
 import { ComplexC } from './../math/complexC';
 import { Signal } from './signal';
 
-export class Graph{
+export class AngleGraph{
     canvas: HTMLCanvasElement
     span: HTMLSpanElement
     context: CanvasRenderingContext2D
@@ -11,8 +10,6 @@ export class Graph{
     scale: number
     canvasX: number
     canvasY: number
-    circleWinX: number
-    waveWinX: number
     signals: {(id: string): Signal}
 
     constructor(id: string, axisLineInterval: number, axisLineLength: number, canvasSize, signals?: {(id: string): Signal}){
@@ -25,8 +22,6 @@ export class Graph{
         this.scale = 0
         this.canvasX = canvasSize.x //canvasSize argument should be {x: _, y: _}
         this.canvasY = canvasSize.y //canvasY also doubles as the x of the circle window
-        this.circleWinX = this.canvasY //For readability
-        this.waveWinX = this.canvasX - this.canvasY
 
         this.canvas.width = this.canvasX
         this.canvas.height = this.canvasY
@@ -46,35 +41,17 @@ export class Graph{
     drawAxis(){
         this.context.beginPath()
         this.context.strokeStyle = '#000000AA';
-        for(var x = this.circleWinX; x<this.canvasX; x += this.axisLineInterval){
+        for(var x = 0; x<this.canvasX; x += this.axisLineInterval){
             this.context.moveTo(x+this.axisLineLength, this.canvasY/2);
             this.context.lineTo(x, this.canvasY/2);
         }
         this.context.stroke();
     }
 
-    drawCircle(){
-        var center = this.canvasY/2
-        var cxt = this.context // Making the name shorter because it will be used a lot
-        cxt.beginPath();
-        cxt.strokeStyle = '#000000FF';
-        cxt.arc(center, center, center, 0, 2 * Math.PI);
-        cxt.stroke();
-
-        cxt.beginPath();
-        cxt.strokeStyle = '#00000022';
-        cxt.moveTo(0, center)
-        cxt.lineTo(center*2, center)
-        cxt.moveTo(center, 0)
-        cxt.lineTo(center, center*2)
-        cxt.stroke();
-    }
-
     redraw(timeInstant): {(id: string): number}{
         /* Redraw the entire graph with all the signals */
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawAxis()
-        this.drawCircle()
         var currentValues: {(id: string): number} = <{(id: string): number}>{}
         Object.keys(this.signals).forEach(id => {
             currentValues[id] = this.signals[id].draw(timeInstant)
@@ -82,8 +59,8 @@ export class Graph{
         return currentValues
     }
 
-    addSignal(id: string, ...args: [ComplexC, number, string, Unit]){
-        this.signals[id] = new Signal(id, this, ...args)
+    addSignal(id: string, ...args: [ComplexC, number, string]){
+        this.signals[id] = new Signal(this, ...args)
 
         var textElement = document.createElement('p')
         textElement.id = id+'Text'

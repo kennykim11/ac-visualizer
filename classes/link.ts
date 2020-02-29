@@ -43,7 +43,7 @@ export class Link{
         }
 
         valueElement.onchange = () => {
-            this.value = parseInt(sliderElement.value)
+            this.value = parseInt(valueElement.value)
             sliderElement.value = valueElement.value
             recalculateCallback()
         }

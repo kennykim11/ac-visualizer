@@ -1,7 +1,9 @@
+import { Unit } from './unit';
 import { ComplexC } from './../math/complexC';
 import { Graph } from './graph';
 
 export class Signal{
+    id: string
     graph: Graph
     elementMax: number
     memory: [number?]
@@ -13,8 +15,10 @@ export class Signal{
     creationTime: number
     lastTime: number
     scaling: number
+    unit: Unit
 
-    constructor(graph: Graph, equation: ComplexC, frequency: number, lineColor) {
+    constructor(id: string, graph: Graph, equation: ComplexC, frequency: number, lineColor: string, unit: Unit) {
+        this.id = id
         this.graph = graph
         this.elementMax = graph.canvasX - graph.circleWinX
         this.memory = []
@@ -26,6 +30,7 @@ export class Signal{
         this.creationTime = (new Date).getTime()
         this.lastTime = 0
         this.scaling = 1/this.trigMagnitude //Should always be between 0 and 1
+        this.unit = unit
     }
 
     getRange(calculatedY){
@@ -48,7 +53,8 @@ export class Signal{
         var calculatedY =  Math.sin(angleInRadian) * this.trigMagnitude
 
         var memoryRange = this.getRange(calculatedY)
-        this.scaling = 1/ memoryRange['absMax']
+
+        this.scaling = 1/this.unit.pushAndGetMax(this.id, memoryRange['absMax'])
 
         var currentY = calculatedY * center * this.scaling + center
         var currentX = center * Math.cos(angleInRadian) * this.trigMagnitude * this.scaling + center

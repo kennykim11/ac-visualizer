@@ -31,17 +31,40 @@ export class ComplexC{
         return new ComplexC(this.real-other.real, this.imaginary-other.imaginary)
     }
 
-    mult(other: ComplexC): ComplexC{
-        return new ComplexC((this.real*other.real) - (this.imaginary*other.imaginary), this.real*other.imaginary + this.imaginary*other.real)
+    mult(other: ComplexC, forceSign?: boolean): ComplexC{
+        var real = (this.real*other.real) - (this.imaginary*other.imaginary)
+        var imaginary = this.real*other.imaginary + this.imaginary*other.real
+        if (forceSign == true){
+            real = Math.abs(real)
+            imaginary = Math.abs(imaginary)
+        }
+        if (forceSign == false){
+            real = -1 * Math.abs(real)
+            imaginary = Math.abs(imaginary)
+        }
+        return new ComplexC(real, imaginary)
     }
 
     neg(): ComplexC{
         return new ComplexC(-1*this.real, -1*this.imaginary);
     }
 
-    div(other: ComplexC): ComplexC{
+    div(other: ComplexC, forceSign?: boolean): ComplexC{
         var denominator = other.real * other.real + other.imaginary * other.imaginary
-        return new ComplexC(((this.real * other.real) + (this.imaginary + other.imaginary))/denominator, ((this.real * other.imaginary) + (this.imaginary + other.real))/denominator)
+        var numer1 = ((this.real * other.real) + (this.imaginary * other.imaginary))/denominator
+        var numer2 = ((this.real * other.imaginary) - (this.imaginary * other.real))/denominator
+        
+        if (forceSign == true) numer2 = Math.abs(numer2)
+        if (forceSign == false) numer2 = -1 * Math.abs(numer2)
+        //console.log(`${this.getRectString()} / ${other.getRectString()} = ${new ComplexC(numer1, numer2).getRectString()}`)
+        return new ComplexC(numer1, numer2)
+        
+        //This sputters between 90 and -90
+        // var thisPolar = this.getPolar()
+        // var otherPolar = other.getPolar()
+        // var angle = thisPolar.angle - otherPolar.angle
+        // var magnitude = thisPolar.mag / otherPolar.mag
+        // return new ComplexC(magnitude * Math.cos(angle), magnitude * Math.sin(angle))
     }
 
     reciprocal(): ComplexC{

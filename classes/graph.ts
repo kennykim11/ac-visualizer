@@ -32,6 +32,7 @@ export class Graph{
         this.canvas.height = this.canvasY
 
         this.span.appendChild(this.canvas)
+        this.span.className = 'graphSpan'
         this.signals = signals || <{(id: string): Signal}>{}
         for (var id in signals){
             var textElement = document.createElement('p')
@@ -82,8 +83,8 @@ export class Graph{
         return currentValues
     }
 
-    addSignal(id: string, ...args: [ComplexC, number, string, Unit]){
-        this.signals[id] = new Signal(id, this, ...args)
+    addSignal(id: string, label: string, ...args: [ComplexC, number, string, Unit]){
+        this.signals[id] = new Signal(id, label, this, ...args)
 
         var textElement = document.createElement('p')
         textElement.id = id+'Text'

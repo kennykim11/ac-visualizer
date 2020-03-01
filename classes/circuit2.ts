@@ -1,3 +1,4 @@
+import { AngleGraph } from './angleGraph';
 import { Unit } from './unit';
 import { Graph } from './graph';
 import { ComplexC } from './../math/complexC';
@@ -20,80 +21,99 @@ export class Circuit2 implements Circuit{
     resistorCurrent: ComplexC
     inductorCurrent: ComplexC
     capacitorCurrent: ComplexC
+    resistorImpedence: ComplexC
+    inductorImpedence: ComplexC
+    capacitorImpedence: ComplexC
+    totalImpedence: ComplexC
+    averagePower: ComplexC
+    reactivePower: ComplexC
+    complexPower: ComplexC
 
     graphs: [Graph?] = []
 
     // === UNITS ===
-    voltageUnit = new Unit('voltage')
-    currentUnit = new Unit('current')
+    voltageUnit = new Unit('voltage', 'V')
+    currentUnit = new Unit('current',  'A')
+    impedenceUnit = new Unit('impedence', 'Ω')
+    powerUnit = new Unit('power', 'W/VA/VAR')
+    powerLineUnit = new Unit('power', 'W/VA/VAR')
 
     public constructor(){
-        var settingsBar = document.getElementById('settingsBar')
-        console.log(settingsBar)
-        var inductanceReadout = document.createElement('p')
-        inductanceReadout.id = 'inductanceReadout'
-        var capacitanceReadout = document.createElement('p')
-        capacitanceReadout.id = 'capacitanceReadout'
-        settingsBar.appendChild(inductanceReadout)
-        settingsBar.appendChild(capacitanceReadout)
-
+        const simSpeed = 0.5
         this.recalculate()
+        var canvasWidth = window.innerWidth/6
+        var canvasHeight = canvasWidth / 3
         
-        var SourceV_SourceI = new Graph('canvases', 20, 10, {x: 250, y:80})
-        SourceV_SourceI.addSignal('sourceVoltage_1', this.sourceVoltage, 0.5, '#888888', this.voltageUnit)
-        SourceV_SourceI.addSignal('sourceCurrent_1', this.sourceCurrent, 0.5, '#000000', this.currentUnit)
+        var SourceV_SourceI = new Graph('canvases', 20, 10, {x: canvasWidth, y:canvasHeight})
+        SourceV_SourceI.addSignal('sourceVoltage_1', 'Es', this.sourceVoltage, simSpeed, '#AAAAAA', this.voltageUnit)
+        SourceV_SourceI.addSignal('sourceCurrent_1', 'Is', this.sourceCurrent, simSpeed, '#666666', this.currentUnit)
+        SourceV_SourceI.addSignal('complexPower_1', 'S', this.complexPower, simSpeed, '#000000', this.powerUnit)
         this.graphs.push(SourceV_SourceI)
 
-        var SourceI_ResI = new Graph('canvases', 20, 10, {x: 250, y:80})
-        SourceI_ResI.addSignal('sourceCurrent_2', this.sourceCurrent, 0.5, '#000000', this.currentUnit)
-        SourceI_ResI.addSignal('sourceVoltage_2', this.sourceVoltage, 0.5, '#888888', this.voltageUnit)
-        SourceI_ResI.addSignal('resistorCurrent', this.resistorCurrent, 0.5, '#FF0000', this.currentUnit)
+        var SourceI_ResI = new Graph('canvases', 20, 10, {x: canvasWidth, y:canvasHeight})
+        SourceI_ResI.addSignal('sourceVoltage_2', 'Er', this.sourceVoltage, simSpeed, '#AAAAAA', this.voltageUnit)
+        SourceI_ResI.addSignal('sourceCurrent_2', 'Is', this.sourceCurrent, simSpeed, '#666666', this.currentUnit)
+        SourceI_ResI.addSignal('resistorCurrent', 'Ir', this.resistorCurrent, simSpeed, '#FF0000', this.currentUnit)
         this.graphs.push(SourceI_ResI)
 
-        var SourceI_IndI = new Graph('canvases', 20, 10, {x: 250, y:80})
-        SourceI_IndI.addSignal('sourceCurrent_3', this.sourceCurrent, 0.5, '#000000', this.currentUnit)
-        SourceI_IndI.addSignal('sourceVoltage_3', this.sourceVoltage, 0.5, '#888888', this.voltageUnit)
-        SourceI_IndI.addSignal('inductorCurrent', this.inductorCurrent, 0.5, '#44BBFF', this.currentUnit)
+        var SourceI_IndI = new Graph('canvases', 20, 10, {x: canvasWidth, y:canvasHeight})
+        SourceI_IndI.addSignal('sourceVoltage_3', 'El', this.sourceVoltage, simSpeed, '#AAAAAA', this.voltageUnit)
+        SourceI_IndI.addSignal('sourceCurrent_3', 'Is', this.sourceCurrent, simSpeed, '#666666', this.currentUnit)
+        SourceI_IndI.addSignal('inductorCurrent', 'Il', this.inductorCurrent, simSpeed, '#44BBFF', this.currentUnit)
         this.graphs.push(SourceI_IndI)
 
-        var SourceI_CapI = new Graph('canvases', 20, 10, {x: 250, y:80})
-        SourceI_CapI.addSignal('sourceCurrent_4', this.sourceCurrent, 0.5, '#000000', this.currentUnit)
-        SourceI_CapI.addSignal('sourceVoltage_4', this.sourceVoltage, 0.5, '#888888', this.voltageUnit)
-        SourceI_CapI.addSignal('capacitorCurrent', this.capacitorCurrent, 0.5, '#0000FF', this.currentUnit)
+        var SourceI_CapI = new Graph('canvases', 20, 10, {x: canvasWidth, y:canvasHeight})
+        SourceI_CapI.addSignal('sourceVoltage_4', 'Ec', this.sourceVoltage, simSpeed, '#AAAAAA', this.voltageUnit)
+        SourceI_CapI.addSignal('sourceCurrent_4', 'Is', this.sourceCurrent, simSpeed, '#666666', this.currentUnit)
+        SourceI_CapI.addSignal('capacitorCurrent', 'Ic', this.capacitorCurrent, simSpeed, '#0000FF', this.currentUnit)
         this.graphs.push(SourceI_CapI)
+
+        var impedenceGraph = new AngleGraph('canvases', 20, 10, {x: canvasHeight/2, y:canvasHeight})
+        impedenceGraph.addSignal('totalImpedence', 'Zt', this.totalImpedence, simSpeed, '#dec909', this.impedenceUnit)
+        impedenceGraph.addSignal('resistorImpedence', 'Zr', this.resistorImpedence, simSpeed, '#e6904e', this.impedenceUnit)
+        impedenceGraph.addSignal('inductorImpedence', 'Zl', this.inductorImpedence, simSpeed, '#53edd0', this.impedenceUnit)
+        impedenceGraph.addSignal('capacitorImpedence', 'Zc', this.capacitorImpedence, simSpeed, '#3fb59f', this.impedenceUnit)
+        this.graphs.push(impedenceGraph)
+
+        var powerGraph = new AngleGraph('canvases', 20, 10, {x: canvasHeight/2, y:canvasHeight})
+        powerGraph.addSignal('reactivePower', 'Q', this.reactivePower, simSpeed, '#543500', this.powerLineUnit)
+        powerGraph.addSignal('averagePower', 'P', this.averagePower, simSpeed, '#a36700', this.powerLineUnit)
+        powerGraph.addSignal('complexPower_2', 'S', this.complexPower, simSpeed, '#7d4f00', this.powerLineUnit)
+        this.graphs.push(powerGraph)
     }
 
     recalculate() {
         var start_time = Date.now()
         var omega = this.voltageFreq.value * 2 * Math.PI
         this.sourceVoltage = new ComplexC(this.voltagePk.value, 0)
-        var resistorImpedence = new ComplexC(this.resistance.value, 0)
-        var inductorImpedence = new ComplexC(0, this.inductance.value / 1000 * omega)
-        var capacitorImpedence = new ComplexC(0, -1/(this.capacitance.value / 1000000 * omega))
-        var impedenceTotal = (resistorImpedence.reciprocal().add(inductorImpedence.reciprocal()).add(capacitorImpedence.reciprocal())).reciprocal()
-        this.sourceCurrent = this.sourceVoltage.div(impedenceTotal)
-        this.resistorCurrent = this.sourceCurrent.mult(impedenceTotal.div(resistorImpedence))
-        this.inductorCurrent = this.sourceCurrent.mult(impedenceTotal.div(inductorImpedence))
-        this.capacitorCurrent = this.sourceCurrent.mult(impedenceTotal.div(capacitorImpedence))
+        this.resistorImpedence = new ComplexC(this.resistance.value, 0)
+        this.inductorImpedence = new ComplexC(0, this.inductance.value / 1000 * omega)
+        this.capacitorImpedence = new ComplexC(0, -1/(this.capacitance.value / 1000000 * omega))
+        this.totalImpedence = (this.resistorImpedence.reciprocal().add(this.inductorImpedence.reciprocal()).add(this.capacitorImpedence.reciprocal())).reciprocal()
+        this.totalImpedence.imaginary *= -1
+        this.sourceCurrent = this.sourceVoltage.div(this.totalImpedence)
+        this.resistorCurrent = this.sourceCurrent.mult(this.totalImpedence.div(this.resistorImpedence))
+        this.inductorCurrent = this.sourceCurrent.mult(this.totalImpedence.div(this.inductorImpedence), true)
+        this.capacitorCurrent = this.sourceCurrent.mult(this.totalImpedence.div(this.capacitorImpedence), false)
+        this.complexPower = this.sourceVoltage.mult(this.sourceCurrent)
+        this.averagePower = new ComplexC(this.complexPower.real, 0)
+        this.reactivePower = new ComplexC(0, this.complexPower.imaginary)
         this.graphs.forEach(graph => {
             for (var id in graph.getSignals()){
                 graph.setSignal(id, this[id.split('_')[0]])
             }
         });
-
-        document.getElementById('inductanceReadout').innerHTML = 'Ind. impedence: ' + inductorImpedence.imaginary.toFixed(3) + 'jΩ'
-        document.getElementById('capacitanceReadout').innerHTML = 'Cap. impedence: ' + capacitorImpedence.imaginary.toFixed(3) + 'jΩ'
-
-        //console.log(`${this.inductorCurrent.getPolarString()} = ${this.sourceCurrent.getPolarString()} * ${impedenceTotal.getPolarString()} / ${inductorImpedence.getPolarString()}`)
     }
 
     redraw(timeInstant: number) {
         this.graphs.forEach(graph => {
             var currentValues = graph.redraw(timeInstant)
             
-            for (var id in graph.getSignals()){
+            var signalsDict = graph.getSignals()
+            for (var id in signalsDict){
                 var text = document.getElementById(id+'Text')
-                text.innerHTML = this[id.split('_')[0]].getPolarString() + ' => ' + currentValues[id].toFixed(3)
+                if (currentValues[id] == null) text.innerHTML = signalsDict[id].label + ' = ' + this[id.split('_')[0]].getPolarString()
+                else text.innerHTML = signalsDict[id].label + ' = ' + this[id.split('_')[0]].getPolarString() + ' => ' + currentValues[id].toFixed(3)
             }
         });
     }

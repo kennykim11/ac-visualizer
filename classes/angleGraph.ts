@@ -1,51 +1,35 @@
+import { Unit } from './unit';
+import { Graph } from './graph';
 import { ComplexC } from './../math/complexC';
 import { Signal } from './signal';
 
-export class AngleGraph{
-    canvas: HTMLCanvasElement
-    span: HTMLSpanElement
-    context: CanvasRenderingContext2D
-    axisLineInterval: number
-    axisLineLength: number
-    scale: number
-    canvasX: number
-    canvasY: number
-    signals: {(id: string): Signal}
-
+export class AngleGraph extends Graph{
     constructor(id: string, axisLineInterval: number, axisLineLength: number, canvasSize, signals?: {(id: string): Signal}){
-        var parent = <HTMLElement>document.getElementById(id)
-        this.span = document.createElement('span')
-        this.canvas = document.createElement('canvas')
-        this.context = this.canvas.getContext('2d')
-        this.axisLineInterval = axisLineInterval
-        this.axisLineLength = axisLineLength
-        this.scale = 0
-        this.canvasX = canvasSize.x //canvasSize argument should be {x: _, y: _}
-        this.canvasY = canvasSize.y //canvasY also doubles as the x of the circle window
-
-        this.canvas.width = this.canvasX
-        this.canvas.height = this.canvasY
-
-        this.span.appendChild(this.canvas)
-        this.signals = signals || <{(id: string): Signal}>{}
-        for (var id in signals){
-            var textElement = document.createElement('p')
-            textElement.id = id+'Text'
-            textElement.style.color = signals[id].lineColor
-            this.span.appendChild(textElement)
-        }
-
-        parent.appendChild(this.span)
+        super(id, axisLineInterval, axisLineLength, canvasSize)
     }
 
     drawAxis(){
+        this.context.lineWidth = 1
         this.context.beginPath()
         this.context.strokeStyle = '#000000AA';
         for(var x = 0; x<this.canvasX; x += this.axisLineInterval){
             this.context.moveTo(x+this.axisLineLength, this.canvasY/2);
             this.context.lineTo(x, this.canvasY/2);
         }
+        this.context.moveTo(0,0)
+        this.context.lineTo(1,this.canvasY)
         this.context.stroke();
+    }
+
+    drawComplexLine(signal: Signal){
+        this.context.lineWidth = 2
+        this.context.beginPath()
+        this.context.strokeStyle = signal.lineColor
+        this.context.moveTo(2, this.canvasY/2)
+        this.scale = Math.min(this.canvasX, this.canvasY/2) / signal.unit.pushAndGetMax(signal.id, Math.max(Math.abs(signal.equation.real), Math.abs(signal.equation.imaginary)))
+        this.context.lineTo(signal.equation.real * this.scale + 2, -1 * signal.equation.imaginary * this.scale + this.canvasY/2)
+        this.context.stroke()
+        return null
     }
 
     redraw(timeInstant): {(id: string): number}{
@@ -53,14 +37,14 @@ export class AngleGraph{
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawAxis()
         var currentValues: {(id: string): number} = <{(id: string): number}>{}
-        Object.keys(this.signals).forEach(id => {
-            currentValues[id] = this.signals[id].draw(timeInstant)
+        Object.keys(this.signals).reverse().forEach(id => {
+            currentValues[id] = this.drawComplexLine(this.signals[id])
         })
         return currentValues
     }
 
-    addSignal(id: string, ...args: [ComplexC, number, string]){
-        this.signals[id] = new Signal(this, ...args)
+    addSignal(id: string, label: string, ...args: [ComplexC, number, string, Unit]){
+        this.signals[id] = new Signal(id, label, this, ...args)
 
         var textElement = document.createElement('p')
         textElement.id = id+'Text'

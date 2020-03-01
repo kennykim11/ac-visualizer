@@ -16,9 +16,11 @@ export class Signal{
     lastTime: number
     scaling: number
     unit: Unit
+    label: string
 
-    constructor(id: string, graph: Graph, equation: ComplexC, frequency: number, lineColor: string, unit: Unit) {
+    constructor(id: string, label: string, graph: Graph, equation: ComplexC, frequency: number, lineColor: string, unit: Unit) {
         this.id = id
+        this.label = label
         this.graph = graph
         this.elementMax = graph.canvasX - graph.circleWinX
         this.memory = []

@@ -52,3 +52,11 @@
 span {
     float: left;
 }
+
+.graphSpan{
+    margin: 5px;
+}
+
+p{
+    font-size: 0.8rem;
+}
